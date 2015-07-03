@@ -10,7 +10,4 @@ print("Opened Wrapper_database database successfully")
 with open('data.json') as data_file: #'data.json' must be replaced with sys.argv[5]    
     data = json.load(data_file)
 
-#print examples
-print(data["maps"][0]["id"])
-print(data["masks"]["id"])
-print(data["om_points"])
+print(data)
