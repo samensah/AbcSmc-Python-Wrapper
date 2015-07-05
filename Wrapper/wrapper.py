@@ -22,7 +22,6 @@ def simulator() -> None:
 exec(open(parsed.myscript).read())
 print("Opened simulator python script successfully")
 
-
 # reading and writing to database
 with conn:
 	cur = conn.cursor()
@@ -42,4 +41,4 @@ def load_jsondata(jsonfile):
 		print('Database must have a .json extension')
 
 
-
+#load_jsondata('data.json')
