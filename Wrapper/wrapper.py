@@ -2,6 +2,11 @@
 import sqlite3
 import json
 import argparse
+import subprocess as sub
+
+def simulator(row):
+	pass
+
 
 parser = argparse.ArgumentParser(description="Run AbcSmc")
 
@@ -14,14 +19,11 @@ def pjson(jsonfile):
 			print("invalid json input")
 			exit()
 
-def loadsim(myscript):
-	exec (open(myscript).read())
-
-
 parser.add_argument('myscript',
-					type=loadsim, metavar='s',
+					type=str, metavar='s',
 					help='the .py or .pyc with your def simulate.'
 )
+
 
 parser.add_argument(
   'json',
@@ -30,7 +32,12 @@ parser.add_argument(
   type=pjson
 )
 
+
 parsed = parser.parse_args()
+
+
+exec(open(parsed.myscript).read())
+
 
 # connect python wrapper to Sqlite
 conn = sqlite3.connect('/home/samuel/PycharmProjects/CAMS_Workshop/'
@@ -42,12 +49,14 @@ conn = sqlite3.connect('/home/samuel/PycharmProjects/CAMS_Workshop/'
 # parser.add_argument('json_file', type=str, default = 'data.json')
 
 
-
-def simulator() -> None:
-  pass  # reading and writing to database
-
 with conn:
 	cur = conn.cursor()
 	for row in cur.execute('SELECT * FROM parameters'):
 		results = simulator(row)
 		cur.execute('insert into metrics values (?,?,?,?,?,?,?,?)', results)
+
+
+# to read from command line
+p = sub.Popen('date', stdout=sub.PIPE, stderr=sub.PIPE)
+output, errors = p.communicate()
+print(output)
