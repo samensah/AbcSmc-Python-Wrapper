@@ -1,0 +1,35 @@
+{
+    "smc_iterations" : 6,
+    "num_samples"    : 100,
+    "predictive_prior_fraction" : 0.1,
+    "pls_training_fraction"     : 0.5,
+
+    "database_filename"             : "dice.sqlite",
+
+    "parameters" : [
+        {"name"       : "number of dice",
+         "short_name" : "ndice",
+         "dist_type"  : "UNIFORM",
+         "num_type"   : "INT",
+         "par1"       : 1,
+         "par2"       : 100},
+
+        {"name"       : "number of sides",
+         "short_name" : "sides",
+         "dist_type"  : "UNIFORM",
+         "num_type"   : "INT",
+         "par1"       : 1,
+         "par2"       : 100}
+    ],                
+
+    "metrics" : [     
+        {"name"       : "sum",
+         "num_type"   : "INT",
+         "value"      : 31},
+
+        {"name"       : "sd",
+         "num_type"   : "FLOAT",
+         "value"      : 3.45844}
+    ]
+}
+                                       
