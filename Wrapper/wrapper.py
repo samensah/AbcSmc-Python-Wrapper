@@ -3,6 +3,8 @@ import sqlite3
 import json
 import argparse
 import subprocess as sub
+import os
+
 
 
 def simulator(row):
@@ -20,34 +22,48 @@ parser.add_argument('json',
   					help="the .json with the parameters, metrics, and job data",
   					type=str)
 
-parser.add_argument('iteration',
-					default="100", metavar="i",
-					help="the number of iterations",
-					type=int)
-
-parser.add_argument('sample_no', default="10", metavar="n",
-					help="the number of samples",
-					type=int)
+# parser.add_argument('iteration',
+# 					default="100", metavar="i",
+# 					help="the number of iterations",
+# 					type=int)
+#
+# parser.add_argument('sample_no', default="10", metavar="n",
+# 					help="the number of samples",
+# 					type=int)
 
 parsed = parser.parse_args()
 
-exec(open(parsed.myscript).read())
-with open(parsed.json) as data_file:
-	try:
-#check for the existence of various keys, check a num_samples keys and the datatype
+def val_py(file):
+	filename, file_extension = os.path.splitext(file)
+	return file_extension == '.py'
+
+
+def val_json(file):
+	filename, file_extension = os.path.splitext(file)
+	return file_extension == '.json'
+
+
+def checkjson(file):
+	return 'smc_iterations' and 'num_samples' and \
+	'database_filename' and 'parameters' and \
+	'metrics' in file
+
+
+if val_py(parsed.myscript):
+	exec(open(parsed.myscript).read())
+else:
+	print('The simulator script must be a .py')
+
+
+if val_json(parsed.json):
+	with open(parsed.json) as data_file:
 		data = json.load(data_file)
-	except ValueError:
-		print("invalid json input")
-		exit()
-
-
-
-
-
-
-
-# data["num_samples"] = parsed.sample_no
-# data["smc_iterations"] = parsed.iteration
+		if checkjson(data):
+			pass
+		else:
+			print('Check documentation for json format')
+else:
+	print('The file must be a .json')
 
 
 
