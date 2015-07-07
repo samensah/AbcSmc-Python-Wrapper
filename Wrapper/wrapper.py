@@ -34,6 +34,7 @@ parsed = parser.parse_args()
 exec(open(parsed.myscript).read())
 with open(parsed.json) as data_file:
 	try:
+#check for the existence of various keys, check a num_samples keys and the datatype
 		data = json.load(data_file)
 	except ValueError:
 		print("invalid json input")
@@ -50,7 +51,8 @@ with open(parsed.json) as data_file:
 
 
 
-
+#check for the existence of a database, if exist check if is in the right format, the tables, if
+#not create it
 # connect python wrapper to Sqlite
 conn = sqlite3.connect('/home/samuel/PycharmProjects/CAMS_Workshop/'
 					   'AbcSmc_Python_Wrapper/Database/posterior.sqlite'
