@@ -4,49 +4,57 @@ import json
 import argparse
 import subprocess as sub
 
+
 def simulator(row):
 	pass
 
 
 parser = argparse.ArgumentParser(description="Run AbcSmc")
 
-
-def pjson(jsonfile):
-	with open(jsonfile) as data_file:
-		try:
-			return json.load(data_file)
-		except ValueError:
-			print("invalid json input")
-			exit()
-
 parser.add_argument('myscript',
 					type=str, metavar='s',
-					help='the .py or .pyc with your def simulate.'
-)
+					help='the .py or .pyc with your def simulate.')
 
+parser.add_argument('json',
+					default="config.json", metavar="j",
+  					help="the .json with the parameters, metrics, and job data",
+  					type=str)
 
-parser.add_argument(
-  'json',
-  default="config.json", metavar="j",
-  help="the .json with the parameters, metrics, and job data",
-  type=pjson
-)
+parser.add_argument('iteration',
+					default="100", metavar="i",
+					help="the number of iterations",
+					type=int)
 
+parser.add_argument('sample_no', default="10", metavar="n",
+					help="the number of samples",
+					type=int)
 
 parsed = parser.parse_args()
 
-
 exec(open(parsed.myscript).read())
+with open(parsed.json) as data_file:
+	try:
+		data = json.load(data_file)
+	except ValueError:
+		print("invalid json input")
+		exit()
+
+
+
+
+
+
+
+# data["num_samples"] = parsed.sample_no
+# data["smc_iterations"] = parsed.iteration
+
+
 
 
 # connect python wrapper to Sqlite
 conn = sqlite3.connect('/home/samuel/PycharmProjects/CAMS_Workshop/'
 					   'AbcSmc_Python_Wrapper/Database/posterior.sqlite'
 )
-
-
-# parser.add_argument('iteration', type=int, default = 1)
-# parser.add_argument('json_file', type=str, default = 'data.json')
 
 
 with conn:
@@ -59,4 +67,4 @@ with conn:
 # to read from command line
 p = sub.Popen('date', stdout=sub.PIPE, stderr=sub.PIPE)
 output, errors = p.communicate()
-print(output)
+#print(output)
