@@ -40,7 +40,7 @@ def checkjson(json_file):
 	'database_filename' and 'parameters' and \
 	'metrics' in json_file
 
-# query for parameters
+# query to define the parameters
 def build_select_query(json_data, n): #n is the seed_number
 	par_names = []
 	for par in json_data['parameters']:
@@ -56,22 +56,23 @@ def build_select_query(json_data, n): #n is the seed_number
 	return query
 
 # query for metrics
-def build_metrics_query(json_data):
+def build_metrics_query(json_data, serial, met_values):
 	met_names = []
 	for met in json_data['metrics']:
 		if 'short_name' in met:
 			met_names.append('M.' + met['short_name'])
 		else:
 			met_names.append('M.' + met['name'])
-	par_string = ', '.join(met_names)
-	print(par_string)
-	query = "update metrics set ";
-  #          for (int j = 0; j<nmet()-1; j++) { ss << _model_mets[j]->get_short_name() << "=" << met_mat[i][j] << ", "; }
-   #         ss << _model_mets.back()->get_short_name() << "=" << met_mat[i].rightCols(1) << " ";
+	met_assignments = [met_names[i] + '=' + met_values[i] for i in range(len(met_names))]	
+	met_string = ', '.join(met_assignments)
+	print(met_string)
+	query = "update metrics set " + met_string
             # only update metrics if job status is still 'R' or 'Q' or has been paused ('P')
-    #        ss << "where serial = " << serial << " and (select (status is 'R' or status is 'Q' or status is 'P') from jobs where jobs.serial=" << serial << ");";
+	ss = "where serial = " = serial = " and (select (status is 'R' or status is 'Q' or status is 'P') from jobs where jobs.serial=" = serial = ");";
 
-
+def run_abc():
+	p = sub.Popen(['./abc_sql', parsed.json, '--process'], stdout=sub.PIPE, stderr=sub.PIPE)
+	output, errors = p.communicate()
 
 
 
@@ -95,19 +96,23 @@ if val_json(parsed.json):
 else:
 	print('The file must be a .json')
 
-# to read from command line
-p = sub.Popen(['./abc_sql', parsed.json, '--process'], stdout=sub.PIPE, stderr=sub.PIPE)
-output, errors = p.communicate()
+run_abc() # set up database
 
-print "finishing"
-exit()
 # connect python wrapper to Sqlite
 conn = sqlite3.connect(json_data["database_filename"])
 
+# for each smc set:
+for iter_no in range(0, json_data["smc_iterations"] ):
+	# for each particle:
+	for part in range(0, json_data["num_samples"] ):
+		select_query = build_select_query(json_data, part) #to call the parameters in the database
+		#run simulator
+		simulator(select_query)
 
-select_query = build_select_query(json_data, 5)
-build_metrics_query(json_data)
+		build_metrics_query(json_data) # to update the database
+		# insert metrics
 
+	# run abc, capturing output and writing to a log file
 
 
 
