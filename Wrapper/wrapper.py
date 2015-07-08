@@ -66,20 +66,19 @@ else:
 	print('The file must be a .json')
 
 
-
 #check for the existence of a database, if exist check if is in the right format, the tables, if
 #not create it
 # connect python wrapper to Sqlite
-conn = sqlite3.connect('/home/samuel/PycharmProjects/CAMS_Workshop/'
-					   'AbcSmc_Python_Wrapper/Database/posterior.sqlite'
-)
-
+conn = sqlite3.connect(data["database_filename"])
 
 with conn:
 	cur = conn.cursor()
 	for row in cur.execute('SELECT * FROM parameters'):
 		results = simulator(row)
 		cur.execute('insert into metrics values (?,?,?,?,?,?,?,?)', results)
+
+	conn.commit()
+	cur.close()
 
 
 # to read from command line
