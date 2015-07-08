@@ -99,7 +99,7 @@ else:
 p = sub.Popen(['./abc_sql', parsed.json, '--process'], stdout=sub.PIPE, stderr=sub.PIPE)
 output, errors = p.communicate()
 
-print "finishing"
+
 exit()
 # connect python wrapper to Sqlite
 conn = sqlite3.connect(json_data["database_filename"])

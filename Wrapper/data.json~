@@ -1,10 +1,10 @@
 {
     "smc_iterations" : 6,
-    "num_samples"    : 100,
+    "num_samples"    : 10000000000,
     "predictive_prior_fraction" : 0.1,
     "pls_training_fraction"     : 0.5,
 
-    "database_filename"             : "dice.sqlite",
+    "database_filename"             : "../Database/dice.sqlite",
 
     "parameters" : [
         {"name"       : "number of dice",
