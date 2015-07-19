@@ -1,6 +1,6 @@
 {
-    "smc_iterations" : 6,
-    "num_samples"    : 1000,
+    "smc_iterations" : 1,
+    "num_samples"    : 10,
     "predictive_prior_fraction" : 0.1,
     "pls_training_fraction"     : 0.5,
 

@@ -1,0 +1,32 @@
+ERROR: Failed to read SMC set from database because not all particles are complete in set 1
+=========================================================================================
+Predictive prior summary statistics:
+  Par 0: "number of dice"
+  Means:
+    Prior, current  ( delta, % ):         50.5,         24.5 (          -26,      -51.485% )
+  Standard deviations:
+    Prior, current  ( delta, % ):       28.579,       16.279 (        -12.3,      -43.039% )
+
+  Par 1: "number of sides"
+  Means:
+    Prior, current  ( delta, % ):         50.5,         17.5 (          -33,      -65.347% )
+  Standard deviations:
+    Prior, current  ( delta, % ):       28.579,       20.696 (      -7.8826,      -27.582% )
+
+
+
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database
+SQL logic error or missing database

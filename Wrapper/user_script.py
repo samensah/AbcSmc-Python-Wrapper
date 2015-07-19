@@ -1,5 +1,9 @@
+import random
+import numpy as np
 
-#Take ABC parameter
-#Return ABC metrics
-def simulator(row_list):
-	return [1]+list(row_list)[:]
+def simulator(row):
+	add_sum = 0
+	for par in row:
+		add_sum += par
+	stdev = np.std(row) 
+	return add_sum, stdev

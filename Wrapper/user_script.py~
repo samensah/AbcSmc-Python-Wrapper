@@ -1,5 +1,9 @@
+import random
+import numpy as np
 
-def simulator(row_list):
-	row_list = []
-	return (11,12,13,14,15,16,17,18)
-	
+def simulator(row):
+	add_sum = 0
+	for par in row:
+		add_sum += par
+	stdev = np.std(row) 
+	return add_sum," ", stdev
